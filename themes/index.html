@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="bodyBack" onload="startControl()">
+  <!-- top navbar header START-->
+  <!--media max 767px logo set down/up START-->
+  <span class="w-100 d-block logo-mini bg-darkblue text-center">
+    <div class="w-100 d-lg-none d-md-none bg-darkblue text-center">
+      <a href="#">
+        <img src="{{imgPath ~ logoPath}}" alt="Merkury" height="45px">
+      </a>
+    </div>
+  </span>
+  <!--media max 767px logo set down/up END-->
+  <header id="head-LR">
+    <div class="d-flex">
+      <!--left menu open close button START-->
+      <div class="p-2 flex-grow-1 bg-color-white max-height76">
+        <div id="openNavB">
+          <span class="cursorPointer" onclick="openNav()">&#9776;</span>
+        </div>
+        <div id="closeNavB">
+          <span class="cursorPointer" onclick="closeNav()">&#9776;</span>
+        </div>
+      </div>
+      <!--left menu open close button END-->
+      <div class="p-2 bg-color-white max-height76">
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <!--messages drop START-->
+            <div class="dropdown mr-2">
+              <a href="#messages" class="dropBottomCenter mr-2" data-toggle="dropdown" data-placement="left"
+                data-toggle="tooltip" data-placement="bottom" title="{{messagesData.tooltip}}">
+                <i class="fa fa-envelope"></i>
+                <span class="label">{{messagesData.label}}</span>
+              </a>
+              <div class="dropdown-menu myDropdown-content left-DropCenter min-w-250px">
+                {% for hey in messagesData.in %}
+                <a href="{{hey.link}}" class="text-muted">
+                  <img src="{{imgPath ~ hey.userImg}}" alt="{{hey.user}}" width="30px">
+                  {{hey.user}}
+                  <span class="text-muted">{{hey.date}}</span>
+                  <footer>{{hey.message}}(...)</footer>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+            <!--messages drop END-->
+          </li>
+          <li class="nav-item">
+            <!-- notification drop START -->
+            <div class="dropdown mr-1">
+              <a href="#notification" class="mr-2 text-danger" data-toggle="dropdown" data-placement="left"
+                data-toggle="tooltip" data-placement="bottom" title="{{notificationData.tooltip}}">
+                <i class="fa fa-bell"></i>
+                <span class="label">{{notificationData.label}}</span>
+              </a>
+              <div class="dropdown-menu myDropdown-content left-DropCenter min-w-250px">
+                {% for now in notificationData.in %}
+                <a href="{{now.link}}" class="text-danger">
+                  <img src="{{imgPath ~ now.userImg}}" alt="{{imgPath ~ now.user}}" width="30px">
+                  {{now.in.user}}
+                  <span class="text-muted">{{now.date}}</span>
+                  <footer>{{now.message}}</footer>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+            <!-- notification drop END -->
+          </li>
+        </ul>
+      </div>
+      <div class="p-2 bg-color-white max-height76">
+        <!-- userpanel START -->
+        <div class="dropdown">
+          <button type="button" class="btn  bg-color-white" data-toggle="dropdown">
+            <img class="circleUserPanel" src="{{imgPath ~ userPanel.userImg}}" alt="{{userPanel.name}}">
+          </button>
+          <div class="dropdown-menu myDropdown-content">
+            {% for user in userPanel.userMenu %}
+            <a class="dropdown-item {{user.class}}" href="{{user.link}}">{{user.label}}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- userpanel END -->
+      </div>
+    </div>
+  </header>
+  <!-- top navbar header END-->
+  {# left side bar START #}
+  <div id="myLeftNav" class="leftNavClass bg-darkblue menuFont">
+    <span class="leftNavLogo">
+      <img src="{{imgPath ~ logoPath}}" alt="Merkury" width="120px" class="leftNavLogo">
+    </span>
+    {# for menu START #}
+    <ul>
+      {% for menu in menuList %}
+      <li>
+        <a href="{{menu.link}}" class="text-white bg-darkblue-deactive hideMenuR">
+          <i class="{{menu.icon}} mr-3"></i>
+          <span>{{menu.name}}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {# for menu END #}
+  </div>
+  {# left side bar END #}
+  <div id="main-LR">
+    <header>
+      <div>
+        <h3>{{homeHeader}}</h3>
+      </div>
+    </header>
+    <!-- sales / spline chart START-->
+    <div class="row container">
+      <!--your sales chart START-->
+      <div class="col-11 col-xl-5 col-sm-5 col-lg-5 mr-1 min-w-230px">
+        <div class="col card card-block text-justify">
+          <div class="row">
+            <div class="col-11 col-xl-6">
+              <h4 class="text-muted mt-2">{{chartList.salesDonutHeader}}</h4>
+            </div>
+            <div class="col col-xl-6">
+              <button type="button" class="btn setChartBtn float-right" data-toggle="dropdown">
+                <span class="text-muted">{{chartDropHead.label}}</span>{{chartDropHead.def}}
+              </button>
+              <div class="dropdown-menu myDropdown-content">
+                {# chart dropdown menu #}
+                {% for prt in chartDropMenu %}
+                <a class="dropdown-item text-primary" href="{{prt.link}}">{{prt.label}}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-11 col-xl-6 col-lg-8 card card-block text-sm-left no-border">
+              <div class="card-title text-muted">
+                <div id="{{chartList.salesDonut}}"></div>
+              </div>
+            </div>
+            <div class="col-11 col-xl-5 col-lg-8 card card-block text-sm-left no-border">
+              <ul class="yourSalesList text-muted">
+                {% for list in chartList.salesDonutList %}
+                <li>{{list}}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--your sales chart END-->
+      <br>
+      <!--report spline chart START-->
+      <div class="col-10 col-xl-6 col-sm-6 col-md-6 card card-block text-justify">
+        <div class="row">
+          <div class="col-5 col-xl-5 col-sm-5 col-md-5">
+            <h4 class="text-muted mt-2">{{chartList.splineHeader}}</h4>
+          </div>
+          <div class="col-7 col-xl-7 col-sm-7 col-md-7">
+            <button type="button" class="btn float-right setChartBtn" data-toggle="dropdown">
+              <span class="text-muted">Period: </span> Last Year
+            </button>
+            <div class="dropdown-menu myDropdown-content">
+              {# spline chart dropdown menu #}
+              {% for prt in chartDropMenu %}
+              <a class="dropdown-item text-primary" href="{{prt.link}}">{{prt.label}}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-11 col-sm-11 col-lg-12">
+            <div id="{{chartList.spline}}"></div>
+          </div>
+        </div>
+      </div>
+      <!--report spline chart END-->
+    </div>
+    <!-- sales / spline chart END-->
+    <br>
+    <!--task / messages / activity START-->
+    <div class="row mr-2">
+      <!-- tasks 4 step START-->
+      <div class="col-sm-4 col-lg-4">
+        <table class="table">
+          <thead class="bg-color-white">
+            <th colspan="3">
+              <div class="row">
+                <div class="col fontRobotoMedium">
+                  {{task.label}}
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn numberCircle float-right" data-toggle="tooltip"
+                    title="{{task.number.tooltip}}">{{task.number.no}}</button>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn numberCircleDanger float-right" data-toggle="tooltip"
+                    title="{{task.numberDelay.tooltip}}">{{task.numberDelay.no}}</button>
+                </div>
+              </div>
+            </th>
+          </thead>
+          <tbody class="bg-color-white">
+            {# task twig START #}
+            {% for taskGet in task.data %}
+            <tr>
+              <td>
+                <button class="btn btn-circle numberCircle">{{taskGet.message[:1]|upper}}</button>
+              </td>
+              <td>
+                <div>{{taskGet.message}}
+                  {# search 'delay' in string #}
+                  {% if 'delay' in taskGet.date %}
+                  <footer class="text-danger">
+                    <i class="far fa-clock"></i> {{ taskGet.date }}
+                  </footer>
+                  {% else %}
+                  <footer class="text-success">
+                    <i class="far fa-clock"></i> {{ taskGet.date }}
+                  </footer>
+                  {% endif %}
+                </div>
+              </td>
+              <td>
+                <div>
+                  <i class="fa fa-ellipsis-v"></i>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+            {# task twig END #}
+          </tbody>
+        </table>
+      </div>
+      <!-- tasks 4 step END-->
+      <!-- messages 4 step START-->
+      <div class="col-sm-4 col-lg-4">
+        <table class="table">
+          <thead class="bg-color-white">
+            <th colspan="2">
+              <span class="fontRobotoMedium">{{messagesData.header}}</span>
+              <button type="button" class="btn btn-circle numberCircle float-right" data-toggle="tooltip"
+                title="{{messagesData.tooltip}}">{{messagesData.label}}</button>
+            </th>
+          </thead>
+          <tbody class="bg-color-white">
+            <!-- messages START -->
+            {% for mdata in messagesData.in %}
+            <tr>
+              <td>
+                <img src="{{imgPath ~ mdata.userImg}}" alt="{{mdata.user}}" width="50px">
+              </td>
+              <td>
+                <div>{{mdata.user}}
+                  {% if 'min' in mdata.date %}
+                  <span class="text-success">{{mdata.date}}</span>
+                  {% else %}
+                  <span class="text-muted">{{mdata.date}}</span>
+                  {% endif %}
+                  <footer><i class="far fa-clock"></i>
+                    {{mdata.message}}(...)
+                    <footer>
+                      <i class="fa fa-share"></i>
+                      <i class="fa fa-cog"></i>
+                    </footer>
+                  </footer>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+            <!-- messages END -->
+          </tbody>
+        </table>
+      </div>
+      <!-- messages 4 step END-->
+      <!-- activity 4 step START-->
+      <div class="col-sm-4 col-lg-4">
+        <table class="table">
+          <thead class="bg-color-white">
+            <th colspan="2">
+              <span class="fontRobotoMedium">{{notificationData.header}}</span>
+              <button type="button" class="btn btn-circle numberCircle float-right" data-toggle="tooltip"
+                title="{{notificationData.totalActivity ~ ' ' ~ notificationData.header }}">
+                {{notificationData.totalActivity}}</button>
+            </th>
+          </thead>
+          <!-- activity -->
+          <tbody class="bg-color-white">
+            {% for ntf in notificationData.in %}
+            <tr>
+              <td> <img src="{{imgPath ~ ntf.userImg}}" alt="{{ntf.user}}">
+              </td>
+              <td>
+                <div>{{ntf.user}} <span class="text-muted">{{ntf.message}}</span>
+                  {{ntf.task}}
+                  <footer class="text-muted"><i class="far fa-clock"></i>
+                    {{ntf.date}}
+                  </footer>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!-- activity 4 step END -->
+    </div>
+    <!--task / messages / activity END-->
+  </div>
+</body>
+
+</html>
