@@ -53,7 +53,7 @@ h5 {
 }
 
 .text-size-24px {
-  font-size: 24px;
+  font-size: 36px;
 }
 
 .text-size-20px {
@@ -446,10 +446,6 @@ ul.yourSalesList li::before {
   border-bottom-style: solid;
   border-color: gray;
   border-width: 1px;
-}
-
-.loginBack-G {
-  background-image: url(../img/bg.jpeg);
 }
 
 .btn-pillM {

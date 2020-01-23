@@ -140,12 +140,12 @@ echo $twig->render('index.html', array(
     'userName' => 'Talip ÇAKIR',
     'userMenu' => array(
       array(
-        'link' => 'Login.html',
-        'label' => 'Login', 'Register.html',
+        'link' => 'login.php',
+        'label' => 'Login',
         'class' => 'text-primary', '#Logout'
       ),
       array(
-        'link' => 'Register.html',
+        'link' => 'register.php',
         'label' => 'Register',
         'class' => 'text-success'
       ),
