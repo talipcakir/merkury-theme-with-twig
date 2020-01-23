@@ -103,6 +103,10 @@ div>footer {
 
 /* width height costum */
 
+.w-47px {
+  width: 47px!important;
+}
+
 .min-w-250px {
   min-width: 250px;
 }

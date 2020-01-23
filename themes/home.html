@@ -1,0 +1,203 @@
+<div id="main-LR">
+  <header>
+    <div>
+      <h3>{{homeHeader}}</h3>
+    </div>
+  </header>
+  <!-- sales / spline chart START-->
+  <div class="row container">
+    <!--your sales chart START-->
+    <div class="col-11 col-xl-5 col-sm-5 col-lg-5 mr-1 min-w-230px">
+      <div class="col card card-block text-justify">
+        <div class="row">
+          <div class="col-11 col-xl-6">
+            <h4 class="text-muted mt-2">{{chartList.salesDonutHeader}}</h4>
+          </div>
+          <div class="col col-xl-6">
+            <button type="button" class="btn setChartBtn float-right" data-toggle="dropdown">
+              <span class="text-muted">{{chartDropHead.label}}</span>{{chartDropHead.def}}
+            </button>
+            <div class="dropdown-menu myDropdown-content">
+              {# chart dropdown menu #}
+              {% for prt in chartDropMenu %}
+              <a class="dropdown-item text-primary" href="{{prt.link}}">{{prt.label}}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-11 col-xl-6 col-lg-8 card card-block text-sm-left no-border">
+            <div class="card-title text-muted">
+              <div id="{{chartList.salesDonut}}"></div>
+            </div>
+          </div>
+          <div class="col-11 col-xl-5 col-lg-8 card card-block text-sm-left no-border">
+            <ul class="yourSalesList text-muted">
+              {% for list in chartList.salesDonutList %}
+              <li>{{list}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--your sales chart END-->
+    <br>
+    <!--report spline chart START-->
+    <div class="col-10 col-xl-6 col-sm-6 col-md-6 card card-block text-justify">
+      <div class="row">
+        <div class="col-5 col-xl-5 col-sm-5 col-md-5">
+          <h4 class="text-muted mt-2">{{chartList.splineHeader}}</h4>
+        </div>
+        <div class="col-7 col-xl-7 col-sm-7 col-md-7">
+          <button type="button" class="btn float-right setChartBtn" data-toggle="dropdown">
+            <span class="text-muted">Period: </span> Last Year
+          </button>
+          <div class="dropdown-menu myDropdown-content">
+            {# spline chart dropdown menu #}
+            {% for prt in chartDropMenu %}
+            <a class="dropdown-item text-primary" href="{{prt.link}}">{{prt.label}}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-11 col-sm-11 col-lg-12">
+          <div id="{{chartList.spline}}"></div>
+        </div>
+      </div>
+    </div>
+    <!--report spline chart END-->
+  </div>
+  <!-- sales / spline chart END-->
+  <br>
+  <!--task / messages / activity START-->
+  <div class="row mr-2">
+    <!-- tasks 4 step START-->
+    <div class="col-sm-4 col-lg-4">
+      <table class="table">
+        <thead class="bg-color-white">
+          <th colspan="3">
+            <div class="row">
+              <div class="col fontRobotoMedium">
+                {{task.label}}
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn numberCircle float-right" data-toggle="tooltip"
+                  title="{{task.number.tooltip}}">{{task.number.no}}</button>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn numberCircleDanger float-right" data-toggle="tooltip"
+                  title="{{task.numberDelay.tooltip}}">{{task.numberDelay.no}}</button>
+              </div>
+            </div>
+          </th>
+        </thead>
+        <tbody class="bg-color-white">
+          {# task twig START #}
+          {% for taskGet in task.data %}
+          <tr>
+            <td>
+              <button class="btn btn-circle numberCircle">{{taskGet.message[:1]|upper}}</button>
+            </td>
+            <td>
+              <div>{{taskGet.message}}
+                {# search 'delay' in string #}
+                {% if 'delay' in taskGet.date %}
+                <footer class="text-danger">
+                  <i class="far fa-clock"></i> {{ taskGet.date }}
+                </footer>
+                {% else %}
+                <footer class="text-success">
+                  <i class="far fa-clock"></i> {{ taskGet.date }}
+                </footer>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <div>
+                <i class="fa fa-ellipsis-v"></i>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {# task twig END #}
+        </tbody>
+      </table>
+    </div>
+    <!-- tasks 4 step END-->
+    <!-- messages 4 step START-->
+    <div class="col-sm-4 col-lg-4">
+      <table class="table">
+        <thead class="bg-color-white">
+          <th colspan="2">
+            <span class="fontRobotoMedium">{{messagesData.header}}</span>
+            <button type="button" class="btn btn-circle numberCircle float-right" data-toggle="tooltip"
+              title="{{messagesData.tooltip}}">{{messagesData.label}}</button>
+          </th>
+        </thead>
+        <tbody class="bg-color-white">
+          <!-- messages START -->
+          {% for mdata in messagesData.in %}
+          <tr>
+            <td>
+              <img src="{{imgPath ~ mdata.userImg}}" alt="{{mdata.user}}" width="50px">
+            </td>
+            <td>
+              <div>{{mdata.user}}
+                {% if 'min' in mdata.date %}
+                <span class="text-success">{{mdata.date}}</span>
+                {% else %}
+                <span class="text-muted">{{mdata.date}}</span>
+                {% endif %}
+                <footer><i class="far fa-clock"></i>
+                  {{mdata.message}}(...)
+                  <footer>
+                    <i class="fa fa-share"></i>
+                    <i class="fa fa-cog"></i>
+                  </footer>
+                </footer>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          <!-- messages END -->
+        </tbody>
+      </table>
+    </div>
+    <!-- messages 4 step END-->
+    <!-- activity 4 step START-->
+    <div class="col-sm-4 col-lg-4">
+      <table class="table">
+        <thead class="bg-color-white">
+          <th colspan="2">
+            <span class="fontRobotoMedium">{{notificationData.header}}</span>
+            <button type="button" class="btn btn-circle numberCircle float-right" data-toggle="tooltip"
+              title="{{notificationData.totalActivity ~ ' ' ~ notificationData.header }}">
+              {{notificationData.totalActivity}}</button>
+          </th>
+        </thead>
+        <!-- activity -->
+        <tbody class="bg-color-white">
+          {% for ntf in notificationData.in %}
+          <tr>
+            <td> <img src="{{imgPath ~ ntf.userImg}}" alt="{{ntf.user}}">
+            </td>
+            <td>
+              <div>{{ntf.user}} <span class="text-muted">{{ntf.message}}</span>
+                {{ntf.task}}
+                <footer class="text-muted"><i class="far fa-clock"></i>
+                  {{ntf.date}}
+                </footer>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- activity 4 step END -->
+  </div>
+  <!--task / messages / activity END-->
+
+</div>

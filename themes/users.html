@@ -1,0 +1,30 @@
+<div id="main-LR" class="mt-4 mr-4">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        {% for the in tableHead %}
+        <th {{ the.colspan == '2' ? 'class="text-center" colspan="2"'}}>{{the.label}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody class="bg-color-white">
+      {% for u in user %}
+        <tr>
+        <td class="text-center w-47px align-middle">
+          <img src="{{imgPath ~ u.img}}" alt="{{u.name}}" width="45">
+        </td>
+        <td class="align-middle"> {{u.name}}
+          <footer><small class="text-muted">{{u.job}}</small>
+        </td>
+        <td class="align-middle">
+          <span class="far fa-clock"></span> {{u.last}}
+        </td>
+        <td class="align-middle">{{u.email}}</td>
+        <td class="align-middle">{{u.phone}}</td>
+        <td class="align-middle"><i class="fa fa-ellipsis-v fa-lg float-right"></i>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

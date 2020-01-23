@@ -1,0 +1,110 @@
+<!--to do START-->
+<div id="main-LR">
+  <div class="row container">
+    <div class="col mr-3 min-w-200px">
+      <table class="table">
+        <thead>
+          <tr class="row">
+            <th class="col-10">
+              <span class="fontRoboto text-size-20px">{{todoData.header}}</span>
+              <span class="text-muted"> ({{todoData.number}})</span>
+            </th>
+            <th class="col-1">
+              <i class="fas fa-chevron-right fa-lg float-right"></i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todoGet in todoData.data %}
+          <tr class="row bg-color-white mt-2">
+            <td class="col-sm-2 col-2 av-mid">
+              <button class="btn-primary numberCircle">{{todoGet.message[:1]|upper}}</button>
+            </td>
+            <td class="col av-mid">
+              <div>{{todoGet.message}}
+                <footer class="text-muted">
+                  <i class="far fa-clock"></i> {{todoGet.date}}
+                </footer>
+              </div>
+            </td>
+            <td class="col-sm-1 col-1">
+              <i class="fa fa-ellipsis-v fa-lg float-right"></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!--to do END-->
+    <!--in progress START-->
+    <div class="col mr-3 min-w-200px">
+      <table class="table">
+        <thead>
+          <tr class="row">
+            <th class="col">
+              <span class="fontRoboto text-size-20px">
+                {{inpData.header}}
+              </span>
+              <span class="text-muted"> ({{inpData.number}})</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inprog in inpData.data %}
+          <tr class="row bg-color-white av-mid mt-2">
+            <td class="col-sm-2 col-2 av-mid">
+              <button class="btn-primary numberCircle float-left">{{inprog.message[:1]|upper}}</button>
+            </td>
+            <td class="col">
+              <div class="float-center">{{inprog.message}}
+                <footer {{ 'delay' in inprog.date ? 'class="text-danger"' : 'class="text-muted"' }}>
+                  <i class="far fa-clock"></i> {{inprog.date}}
+                </footer>
+              </div>
+            </td>
+            <td class="col-sm-1 col-1">
+              <i class="fa fa-ellipsis-v fa-lg float-right"></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!--in progress END-->
+    <!--completed START-->
+    <div class="col mr-3 min-w-200px">
+      <table class="table">
+        <thead>
+          <tr class="row">
+            <th class="col">
+              <span class="fontRoboto text-size-20px">
+                {{complatedData.header}}
+              </span>
+              <span class="text-muted"> ({{complatedData.number}})</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for complated in complatedData.data %}
+          <tr class="row bg-color-white av-mid mt-2">
+            <td class="col-sm-2 col-2 av-mid">
+              <button class="btn-primary numberCircle float-left">{{complated.message[:1]|upper}}</button>
+            </td>
+            <td class="col">
+              <div class="float-center">{{complated.message}}
+                <footer class="text-success">
+                  <i class="far fa-clock"></i> {{complated.date}}
+                </footer>
+              </div>
+            </td>
+            <td class="col-sm-1 col-1">
+              <i class="fa fa-ellipsis-v fa-lg float-right"></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!--completed END-->

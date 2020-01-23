@@ -1,0 +1,52 @@
+<div id="main-LR">
+  <header class="mt-4 mb-3">
+    <div>
+      <span class="fontRoboto text-size-24px ml-4 left-right-Arrow">{{header}}</span>
+    </div>
+  </header>
+  <table class="table table-bordered bg-color-white mr-3">
+    <thead>
+      <tr>
+        {% for hey in dayHead %}
+        <th width="14.2%">{{hey}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% set daysInMonth = time|date('t') %}
+        {% set startDow = time|date('F 1\\s\\t Y')|date('N') - 1 %}        {% set dow = startDow %}
+        {% for day in range(1,daysInMonth) %}
+        {% if loop.first and startDow != 0 %}
+        <td colspan="{{ startDow }}"></td>
+        {% endif %}
+        <td>
+          <div>
+            <div>{{ day }}</div>
+            <div class="mt-2">
+              {% for dayDD in dayData %}
+              {% if day == dayDD.dayD %}
+              <footer class="{{ dayDD.taskRank == '2' ? 'calenderTasksRed' : 'calenderTasks' }}">
+                {{dayDD.dayTask}}
+              </footer>
+              {% endif %}
+              {% endfor %}
+
+            </div>
+          </div>
+        </td>
+        {% if loop.last and dow != 6 %}
+        <td colspan="{{ 6 - dow }}">&nbsp;</td>
+        {% endif %}
+        {% if dow == 6 %}
+        {% set dow = 0 %}
+      </tr>
+      <tr>
+        {% else %}
+        {% set dow = dow + 1 %}
+        {% endif %}
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</div>
